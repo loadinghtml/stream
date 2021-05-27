@@ -8,35 +8,11 @@ import (
 
 	"github.com/aiocloud/stream/api"
 	"github.com/aiocloud/stream/dns"
+	"github.com/aiocloud/stream/tools"
 )
 
-func beginHTTP(addr string) error {
-	ln, err := net.Listen("tcp", addr)
-	if err != nil {
-		return err
-	}
-	defer ln.Close()
-
-	s := GetListenPort(ln.Addr().String())
-	log.Printf("[HTTP][%s] Started", s)
-
-	for {
-		client, err := ln.Accept()
-		if err != nil {
-			return err
-		}
-
-		go handleHTTP(client, s)
-	}
-}
-
-func handleHTTP(client net.Conn, s string) {
+func handleHTTP(client net.Conn) {
 	defer client.Close()
-
-	if !api.Fetch(client.RemoteAddr().String()) {
-		log.Printf("[HTTP][%s][%s] IP Not Allow", s, client.RemoteAddr())
-		return
-	}
 
 	data := make([]byte, 1400)
 	size, err := client.Read(data)
@@ -71,7 +47,12 @@ func handleHTTP(client net.Conn, s string) {
 		return
 	}
 
-	log.Printf("[HTTP][%s] %s <-> %s", s, client.RemoteAddr(), list["HOST"])
+	if !api.CheckDoamin(list["HOST"]) {
+		return
+	}
+
+	_, s, _ := net.SplitHostPort(client.LocalAddr().String())
+	log.Printf("[Stream][HTTP][%s] %s <-> %s", s, client.RemoteAddr(), list["HOST"])
 
 	remote, err := dns.Dial("tcp", net.JoinHostPort(list["HOST"], s))
 	if err != nil {
@@ -84,5 +65,5 @@ func handleHTTP(client net.Conn, s string) {
 	}
 	data = nil
 
-	CopyBuffer(client, remote)
+	tools.CopyBuffer(client, remote)
 }

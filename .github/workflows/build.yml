@@ -11,39 +11,20 @@ jobs:
         with:
           go-version: 1.16.x
 
-      - name: ZIP
-        shell: bash
-        run: |
-          sudo apt update
-          sudo apt install zip unzip -y
-
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Dependentes
-        shell: bash
-        run: |
-          go mod download
 
       - name: Build
         shell: bash
         run: |
           export CGO_ENABLED=1
           export GOROOT_FINAL=/usr
-
           export GOOS=linux
           export GOARCH=amd64
           go build -a -trimpath -asmflags "-s -w" -ldflags "-s -w" -o release/stream
           cp -f example.json release
 
-      - name: UPX Compress
-        uses: crazy-max/ghaction-upx@v1
-        with:
-          version: latest
-          file: release/stream
-          args: --ultra-brute
-
-      - name: ZIP Compress
+      - name: Compress
         shell: bash
         run: |
           zip -9 -r release.zip release

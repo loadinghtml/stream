@@ -1,49 +1,70 @@
 package mitm
 
 import (
-	"io"
 	"log"
 	"net"
-	"time"
+
+	"github.com/aiocloud/stream/api"
 )
 
-func GetListenPort(addr string) string {
-	_, s, err := net.SplitHostPort(addr)
-	if err != nil {
-		return ""
-	}
-
-	return s
-}
-
-func CopyBuffer(client, remote net.Conn) {
-	go func() {
-		_, _ = io.CopyBuffer(remote, client, make([]byte, 1400))
-		_ = client.SetDeadline(time.Now())
-		_ = remote.SetDeadline(time.Now())
-	}()
-
-	_, _ = io.CopyBuffer(client, remote, make([]byte, 1400))
-	_ = client.SetDeadline(time.Now())
-	_ = remote.SetDeadline(time.Now())
-}
-
 func ListenHTTP(addr string) {
-	go func() {
-		s := GetListenPort(addr)
+	ln, err := net.Listen("tcp", addr)
+	if err != nil {
+		log.Fatalf("[Stream][HTTP][net.Listen] %v", err)
+	}
+	defer ln.Close()
 
-		for {
-			log.Printf("[HTTP][%s] %v", s, beginHTTP(addr))
+	log.Printf("[Stream][HTTP][%s] Started", addr)
+
+	for {
+		client, err := ln.Accept()
+		if err != nil {
+			log.Fatalf("[Stream][HTTP][ln.Accept] %v", err)
 		}
-	}()
+
+		if checked, err := api.CheckIP(client.RemoteAddr()); err != nil {
+			log.Printf("[Stream][HTTP][api.CheckIP] %v", err)
+
+			_ = client.Close()
+			continue
+		} else if !checked {
+			log.Printf("[Stream][HTTP][api.CheckIP] Ban %s", client.RemoteAddr())
+
+			_ = client.Close()
+			continue
+		}
+
+		go handleHTTP(client)
+	}
 }
 
 func ListenTLS(addr string) {
-	go func() {
-		s := GetListenPort(addr)
+	ln, err := net.Listen("tcp", addr)
+	if err != nil {
+		log.Fatalf("[Stream][TLS][net.Listen] %v", err)
+	}
+	defer ln.Close()
 
-		for {
-			log.Printf("[TLS][%s] %v", s, beginTLS(addr))
+	log.Printf("[Stream][TLS][%s] Started", addr)
+
+	for {
+		client, err := ln.Accept()
+		if err != nil {
+			log.Fatalf("[Stream][TLS][ln.Accept] %v", err)
 		}
-	}()
+
+		if checked, err := api.CheckIP(client.RemoteAddr()); err != nil {
+			log.Printf("[Stream][TLS][api.CheckIP] %v", err)
+
+			_ = client.Close()
+			continue
+		} else if !checked {
+			log.Printf("[Stream][TLS][api.CheckIP] Ban %s", client.RemoteAddr())
+
+			_ = client.Close()
+			continue
+		}
+
+		go handleTLS(client)
+	}
 }

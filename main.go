@@ -1,14 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"os"
-	"os/signal"
-	"syscall"
 
 	"github.com/aiocloud/stream/api"
 	"github.com/aiocloud/stream/dns"
@@ -20,22 +15,8 @@ var (
 		Path    string
 		VerCode bool
 	}
-	version = "1.1.3"
 
-	Data struct {
-		API struct {
-			Addr   string `json:"addr"`
-			Secret string `json:"secret"`
-		} `json:"api"`
-		DNS struct {
-			Upstream string `json:"upstream"`
-		} `json:"dns"`
-		MiTM struct {
-			HTTP []string `json:"http"`
-			TLS  []string `json:"tls"`
-		} `json:"mitm"`
-		Allowed []string `json:"allowed"`
-	}
+	verCode = "1.1.3"
 )
 
 func main() {
@@ -44,41 +25,27 @@ func main() {
 	flag.Parse()
 
 	if flags.VerCode {
-		fmt.Println(version)
+		fmt.Println(verCode)
 		return
 	}
 
+	if err := api.Load(flags.Path); err != nil {
+		log.Fatalf("[Stream][main][api.Load] %v", err)
+	}
+
 	{
-		data, err := ioutil.ReadFile(flags.Path)
-		if err != nil {
-			log.Fatalf("[APP] %v", err)
+		info := api.Get()
+		dns.StrictDNS = info.DNS.Strict
+		go dns.Listen(info.DNS.Listen)
+
+		for i := 0; i < len(info.TCP.HTP); i++ {
+			go mitm.ListenHTTP(info.TCP.HTP[i])
 		}
 
-		if err = json.Unmarshal(data, &Data); err != nil {
-			log.Fatalf("[APP] %v", err)
+		for i := 0; i < len(info.TCP.TLS); i++ {
+			go mitm.ListenTLS(info.TCP.TLS[i])
 		}
 	}
 
-	api.Secret = Data.API.Secret
-	dns.Upstream = Data.DNS.Upstream
-
-	for i := 0; i < len(Data.Allowed); i++ {
-		api.Create(Data.Allowed[i])
-	}
-
-	for i := 0; i < len(Data.MiTM.HTTP); i++ {
-		mitm.ListenHTTP(Data.MiTM.HTTP[i])
-	}
-
-	for i := 0; i < len(Data.MiTM.TLS); i++ {
-		mitm.ListenTLS(Data.MiTM.TLS[i])
-	}
-
-	if Data.API.Addr != "" {
-		api.Listen(Data.API.Addr)
-	}
-
-	channel := make(chan os.Signal, 1)
-	signal.Notify(channel, syscall.SIGINT, syscall.SIGTERM)
-	<-channel
+	api.Boot()
 }

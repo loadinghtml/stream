@@ -6,35 +6,11 @@ import (
 
 	"github.com/aiocloud/stream/api"
 	"github.com/aiocloud/stream/dns"
+	"github.com/aiocloud/stream/tools"
 )
 
-func beginTLS(addr string) error {
-	ln, err := net.Listen("tcp", addr)
-	if err != nil {
-		return err
-	}
-	defer ln.Close()
-
-	s := GetListenPort(ln.Addr().String())
-	log.Printf("[TLS][%s] Started", s)
-
-	for {
-		client, err := ln.Accept()
-		if err != nil {
-			return err
-		}
-
-		go handleTLS(client, s)
-	}
-}
-
-func handleTLS(client net.Conn, s string) {
+func handleTLS(client net.Conn) {
 	defer client.Close()
-
-	if !api.Fetch(client.RemoteAddr().String()) {
-		log.Printf("[TLS][%s][%s] IP Not Allow", s, client.RemoteAddr())
-		return
-	}
 
 	data := make([]byte, 1400)
 	size, err := client.Read(data)
@@ -54,7 +30,6 @@ func handleTLS(client net.Conn, s string) {
 
 	// Handshake Type
 	if data[offset] != 0x01 {
-		log.Printf("[TLS][%s][%s] Not Client Hello", s, client.RemoteAddr())
 		return
 	}
 	offset += 1
@@ -113,7 +88,6 @@ func handleTLS(client net.Conn, s string) {
 
 			// Server Name Type
 			if data[offset] != 0x00 {
-				log.Printf("[TLS][%s][%s] Not Host Name", s, client.RemoteAddr())
 				return
 			}
 			offset += 1
@@ -139,7 +113,12 @@ func handleTLS(client net.Conn, s string) {
 		offset += length
 	}
 
-	log.Printf("[TLS][%s] %s <-> %s", s, client.RemoteAddr(), domain)
+	if !api.CheckDoamin(domain) {
+		return
+	}
+
+	_, s, _ := net.SplitHostPort(client.LocalAddr().String())
+	log.Printf("[Stream][TLS][%s] %s <-> %s", s, client.RemoteAddr(), domain)
 
 	remote, err := dns.Dial("tcp", net.JoinHostPort(domain, s))
 	if err != nil {
@@ -152,5 +131,5 @@ func handleTLS(client net.Conn, s string) {
 	}
 	data = nil
 
-	CopyBuffer(client, remote)
+	tools.CopyBuffer(client, remote)
 }

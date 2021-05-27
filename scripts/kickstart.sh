@@ -64,6 +64,7 @@ CURRENT=$(curl -fsSL -4 https://www.cloudflare.com/cdn-cgi/trace | grep ip | tr 
 if [[ "$CURRENT" == "" ]]; then
     OUT_ERROR "[错误] 获取地址失败！"
 fi
+sed -i "s/__DNS_ADDRESS__/$CURRENT/" /etc/stream.json
 
 OUT_ALERT "[信息] 下载程序中"
 rm -fr release
@@ -77,13 +78,13 @@ chmod +x stream
 
 OUT_ALERT "[提示] 复制配置中"
 cp -f example.json /etc/stream.json
-sed -i "s/ccd6c0fe-c4f0-4d36-8dbc-73cd1674dab7/$SECRET/" /etc/stream.json
+sed -i "s/__API_SECRET__/$SECRET/" /etc/stream.json
 
 OUT_ALERT "[提示] 复制程序中"
 cp -f stream /usr/bin
 
 OUT_ALERT "[提示] 配置服务中"
-cat >/etc/systemd/system/stream.service <<EOF
+cat > /etc/systemd/system/stream.service << EOF
 [Unit]
 Description=Stream Unlock Service
 After=network.target
