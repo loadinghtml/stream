@@ -1,6 +1,8 @@
 # Stream Unlock
-[![](https://img.shields.io/badge/Telegram-Group-blue)](https://t.me/aioCloud)
-[![](https://img.shields.io/badge/Telegram-Channel-green)](https://t.me/aioCloud_channel) 
+[![](https://img.shields.io/badge/Telegram-Group-blue?style=flat-square)](https://t.me/aioCloud)
+[![](https://img.shields.io/badge/Telegram-Channel-green?style=flat-square)](https://t.me/aioCloud_channel) 
+[![](https://img.shields.io/github/downloads/aiocloud/stream/total.svg?style=flat-square)](https://github.com/aiocloud/stream/releases)
+[![](https://img.shields.io/github/v/release/aiocloud/stream?style=flat-square)](https://github.com/aiocloud/stream/releases)
 
 流媒体解锁后端
 
