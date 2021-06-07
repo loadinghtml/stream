@@ -213,6 +213,11 @@ nimg.jp
 socdm.com
 ```
 
+Paravi
+```
+paravi.jp
+```
+
 TVer
 ```
 tver.jp
