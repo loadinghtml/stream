@@ -134,6 +134,22 @@ gamer-cds.cdn.hinet.net
 gamer2-cds.cdn.hinet.net
 ```
 
+Catchplay+
+```
+catchplay.com
+d2ivmxp5z2ww0n.cloudfront.net
+ols-ww100-cp.akamaized.net
+tra-www000-cp.akamaized.net
+```
+
+HamiVideo
+```
+apl-hamivideo.cdn.hinet.net
+banner-cfnetwork.cdn.hinet.net
+hamivideo.hinet.net
+previewvod-hamivideo.cdn.hinet.net
+```
+
 KKBOX & KKTV
 ```
 kfs.io
