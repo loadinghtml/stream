@@ -29,6 +29,12 @@ netflixdnstest8.com
 netflixdnstest9.com
 ```
 
+HotStar
+```
+hotstar.com
+```
+
+
 ### 通用服务域名
 Akamai mPulse API
 ```
@@ -215,6 +221,12 @@ dmm.co.jp
 dmm.com
 ```
 
+Fuji TV
+```
+fujitv.co.jp
+stream.ne.jp
+```
+
 Hulu JP
 ```
 happyon.jp
@@ -234,9 +246,22 @@ Paravi
 paravi.jp
 ```
 
+Radiko
+```
+radiko.jp
+radionikkei.jp
+smartstream.ne.jp
+```
+
 TVer
 ```
 tver.jp
+edge.api.brightcove.com
+```
+
+WOWOW
+```
+wowow.co.jp
 ```
 
 ### 韩国区
@@ -267,6 +292,12 @@ bbci.co.uk
 bbcfmt.hs.llnwd.net
 ```
 
+Britbox
+```
+britbox.com
+britbox.co.uk
+```
+
 ITV
 ```
 itvpnpmobile-a.akamaihd.net
@@ -284,6 +315,17 @@ my5.tv
 Skysports
 ```
 skysports.com
+```
+
+### 法国区
+Molotov
+```
+molotov.tv
+```
+
+Salto
+```
+salto.fr
 ```
 
 ### 美国区
@@ -365,6 +407,11 @@ Hulu
 hulu.com
 huluim.com
 hulustream.com
+```
+
+Paramount+
+```
+paramountplus.com
 ```
 
 PBS
