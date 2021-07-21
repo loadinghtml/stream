@@ -16,7 +16,7 @@ var (
 		VerCode bool
 	}
 
-	verCode = "1.2.2"
+	verCode = "1.2.3"
 )
 
 func main() {
