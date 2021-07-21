@@ -1,5 +1,5 @@
-Remove-Item -Force go.*
+rm -Force go.*
 
 go mod init
 go mod tidy
-exit $?
+exit 0
