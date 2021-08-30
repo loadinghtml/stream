@@ -53,8 +53,8 @@ fi
 
 cd ~
 
-OUT_ALERT "[提示] 部署 SmartDNS 中"
-(curl -fsSL https://raw.githubusercontent.com/aiocloud/stream/master/scripts/smartdns.sh | bash) || OUT_ERROR "部署 SmartDNS 失败！"
+OUT_ALERT "[提示] 安装 SmartDNS 中"
+(curl -fsSL https://raw.githubusercontent.com/aiocloud/stream/master/scripts/smartdns.sh | bash) || OUT_ERROR "[错误] 安装 SmartDNS 失败！"
 
 OUT_ALERT "[提示] 生成密钥中"
 SECRET=$(openssl rand -hex 12)
@@ -65,14 +65,14 @@ if [[ "$CURRENT" == "" ]]; then
     OUT_ERROR "[错误] 获取地址失败！"
 fi
 
-OUT_ALERT "[信息] 下载程序中"
+OUT_ALERT "[提示] 下载程序中"
 rm -fr release
-wget -O release.zip https://github.com/aiocloud/stream/releases/latest/download/release.zip || OUT_ERROR "下载失败！"
+wget -O release.zip https://github.com/aiocloud/stream/releases/latest/download/release.zip || OUT_ERROR "[错误] 下载程序失败！"
 
-OUT_ALERT "[信息] 解压程序中"
+OUT_ALERT "[提示] 解压程序中"
 unzip release.zip && rm -f release.zip && cd release
 
-OUT_ALERT "[信息] 设置权限中"
+OUT_ALERT "[提示] 设置权限中"
 chmod +x stream
 
 OUT_ALERT "[提示] 复制配置中"
@@ -103,8 +103,8 @@ OUT_ALERT "[提示] 重载服务中"
 systemctl daemon-reload
 
 OUT_ALERT "[提示] 启动服务中"
-systemctl enable --now stream
-systemctl enable --now smartdns
+systemctl enable stream smartdns
+systemctl restart stream smartdns
 
 OUT_INFO  "[信息] 部署完毕！"
 OUT_ALERT "[提示] 您的 DNS 地址 $CURRENT:53"
