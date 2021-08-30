@@ -1,4 +1,5 @@
 ## 主流流媒体域名介绍说明
+
 以下是常见流媒体域名介绍，按区域及字母排序，方便对照和维护
 
 ipinfo
@@ -6,36 +7,8 @@ ipinfo
 ipinfo.io
 ```
 
-### 全球流媒体
-Netflix
-```
-fast.com
-netflix.com
-netflix.net
-nflxext.com
-nflximg.com
-nflximg.net
-nflxso.net
-nflxvideo.net
-netflixdnstest0.com
-netflixdnstest1.com
-netflixdnstest2.com
-netflixdnstest3.com
-netflixdnstest4.com
-netflixdnstest5.com
-netflixdnstest6.com
-netflixdnstest7.com
-netflixdnstest8.com
-netflixdnstest9.com
-```
-
-HotStar
-```
-hotstar.com
-```
-
-
 ### 通用服务域名
+
 Akamai mPulse API
 ```
 go-mpulse.net
@@ -58,7 +31,62 @@ edgedatg.go.com
 cdn.registerdisney.go.com
 ```
 
+Brightcove
+```
+edge.api.brightcove.com
+players.brightcove.net
+```
+
+### 全球流媒体
+
+Disney Plus
+```
+bamgrid.com
+disney-plus.net
+disneyplus.com
+dssott.com
+```
+
+HotStar
+```
+hotstar.com
+```
+
+Netflix
+```
+fast.com
+netflix.com
+netflix.net
+nflxext.com
+nflximg.com
+nflximg.net
+nflxso.net
+nflxvideo.net
+netflixdnstest0.com
+netflixdnstest1.com
+netflixdnstest2.com
+netflixdnstest3.com
+netflixdnstest4.com
+netflixdnstest5.com
+netflixdnstest6.com
+netflixdnstest7.com
+netflixdnstest8.com
+netflixdnstest9.com
+```
+
+Youtube Premium
+```
+gstatic.com
+googlevideo.com
+youtube.com
+ytimg.com
+youtubei.googleapis.com
+googleapis.com
+yt3.ggpht.com
+```
+
 ### 香港区
+
 Bilibili
 ```
 bilibili.com
@@ -132,6 +160,7 @@ viu.tv
 ```
 
 ### 台湾区
+
 Bahamut
 ```
 bahamut.com.tw
@@ -194,6 +223,7 @@ skyking.com.tw
 ```
 
 ### 日本区
+
 AbemaTV
 ```
 abema.io
@@ -257,6 +287,7 @@ TVer
 ```
 tver.jp
 edge.api.brightcove.com
+players.brightcove.net
 ```
 
 WOWOW
@@ -265,6 +296,7 @@ wowow.co.jp
 ```
 
 ### 韩国区
+
 Naver TV
 ```
 naver.com
@@ -272,6 +304,7 @@ smartmediarep.com
 ```
 
 ### 英国区
+
 All4
 ```
 c4assets.com
@@ -318,6 +351,7 @@ skysports.com
 ```
 
 ### 法国区
+
 Molotov
 ```
 molotov.tv
@@ -328,10 +362,39 @@ Salto
 salto.fr
 ```
 
+### 北美地区
+
+Acorn TV
+
+```
+acorn.tv
+boltacorn1-a.akamaihd.net
+rlje-static-assets.s3.amazonaws.com
+players.brightcove.net
+edge.api.brightcove.com
+d1gqkepxkcxgvm.cloudfront.net
+rlje.net
+```
+
+Britbox
+```
+britbox.com
+vod-dash-ww-live.akamaized.net
+vod-dash-ntham-comm-live.akamaized.net
+bbci.co.uk
+bbc.co.uk
+```
+
 ### 美国区
+
 ABC
 ```
 abc.com
+```
+
+AT&T TV Now
+```
+atttvnow.com
 ```
 
 CBS
@@ -342,6 +405,12 @@ cbsivideo.com
 cbsi.live.ott.irdeto.com
 ```
 
+Cinemax
+```
+hbo.com
+play.maxgo.com
+```
+
 CWTV
 ```
 cwtv.com
@@ -350,14 +419,6 @@ edge.cwtv-vod-ext.top.comcast.net
 edge.cwtv-egress.top.comcast.net
 thecwvideo.com
 www.cwseed.com
-```
-
-Disney Plus
-```
-bamgrid.com
-disney-plus.net
-disneyplus.com
-dssott.com
 ```
 
 Disney Now
@@ -372,21 +433,47 @@ edge.api.brightcove.com
 encoretvb.com
 ```
 
+EPIX
+```
+epix.com
+epixhls.akamaized.net
+epixvpp-vh.akamaihd.net
+```
+
 ESPN
 ```
 espn.com
 espncdn.com
 ```
 
-Fox Now
+Fox Now & Fox News & Fox Sports
 ```
+b7tp47v2nb3x-a.akamaihd.net
+d1fkab2qkb5768.cloudfront.net
+d2yyd1h5u9mauk.cloudfront.net
+d3vxlq79yira0y.cloudfront.net
+eycvfqaaaiajsjqacqdaaayaabqsqxwo-pwluii-a58d71feb-clienttons-s.akamaihd.net
 fox.com
 foxdcg.com
+foxnews.com
+foxnewsplayer-a.akamaihd.net
+foxsports.com
+go-mpulse.net
+theplatform.com
+tiiqkzix37d2wyjil3ha-pwluii-d7116965a-clientnsv4-s.akamaihd.net
+trial-eum-clientnsv4-s.akamaihd.net
+trial-eum-clienttons-s.akamaihd.net
+uplynk.com
 ```
 
 Freeform
 ```
 freeform.com
+```
+
+Fubo TV
+```
+fubo.tv
 ```
 
 FX Networks
@@ -424,10 +511,29 @@ Peacock
 peacocktv.com
 ```
 
+Pluto TV
+```
+pluto.tv
+```
+
+Showtime
+```
+bcboltshowtime1-a.akamaized.net
+edge.api.brightcove.com
+players.brightcove.net
+sho.com
+showtime.com
+```
+
 SlingTV
 ```
 sling.com
 movetv.com
+```
+
+Starz
+```
+starz.com
 ```
 
 MTV
@@ -439,6 +545,11 @@ mtvnservices.com
 National Geographic
 ```
 nationalgeographic.com
+```
+
+NBA TV
+```
+nba.com
 ```
 
 NBC
@@ -474,4 +585,25 @@ tveusaeast-x.akamaized.net
 tvewnbc-x.akamaized.net
 tvewnbc-y.akamaized.net
 usanetwork.com
+```
+
+### 加拿大区
+
+CBC Gem
+```
+cbc.ca
+cbchd1dynamicads-i.akamaihd.net
+cbclivedai5-i.akamaihd.net
+cbcnewshd-f.akamaihd.net
+cbcrcott-gem-key.akamaized.net
+cbcrcott-gem.akamaized.net
+go-mpulse.net
+theplatform.com
+```
+
+Crave TV
+```
+crave.ca
+go-mpulse.net
+9c9media.com
 ```
