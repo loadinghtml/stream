@@ -7,6 +7,7 @@
 流媒体解锁后端
 
 ## 推荐系统
+- Debian 11
 - Debian 10
 - Ubuntu 20.04
 - CentOS 8 Stream
