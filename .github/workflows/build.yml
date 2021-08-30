@@ -17,17 +17,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          export CGO_ENABLED=1
-          export GOROOT_FINAL=/usr
-          export GOOS=linux
-          export GOARCH=amd64
-          go build -a -trimpath -asmflags "-s -w" -ldflags "-s -w" -o release/stream
-          cp -f example.json release
-
-      - name: Compress
-        shell: bash
-        run: |
-          zip -9 -r release.zip release
+          ./build.sh
 
       - name: Upload
         uses: actions/upload-artifact@v2
@@ -35,7 +25,14 @@ jobs:
           name: release
           path: release
 
+      - name: Compress
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          zip -9 -r release.zip release
+
       - name: Checksum
+        if: startsWith(github.ref, 'refs/tags/')
         shell: bash
         run: |
           echo "CHECKSUM=$(sha256sum release.zip | awk '{print $1}')" >> $GITHUB_ENV
@@ -51,7 +48,7 @@ jobs:
           files: |
             release.zip
           body: |
-            [![](https://img.shields.io/badge/Telegram-Group-blue)](https://t.me/aioCloud) [![](https://img.shields.io/badge/Telegram-Channel-green)](https://t.me/aioCloud_channel)
+            [![](https://img.shields.io/badge/telegram-group-blue)](https://t.me/aioCloud) [![](https://img.shields.io/badge/telegram-channel-green)](https://t.me/aioCloud_channel)
             ## 更新日志
             * 将会很快更新
 
