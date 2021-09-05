@@ -421,6 +421,13 @@ thecwvideo.com
 www.cwseed.com
 ```
 
+Discovery Plus
+```
+discoveryplus.com
+us1-prod.api2.branch.io
+us1-prod-direct.disco-api.com
+```
+
 Disney Now
 ```
 disneynow.com
