@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 
 	"github.com/aiocloud/stream/api"
@@ -13,21 +12,12 @@ import (
 var (
 	flags struct {
 		Path string
-		Hash bool
 	}
-
-	commitHash string
 )
 
 func main() {
 	flag.StringVar(&flags.Path, "c", "/etc/stream.json", "Path")
-	flag.BoolVar(&flags.Hash, "v", false, "Hash")
 	flag.Parse()
-
-	if flags.Hash {
-		fmt.Println(commitHash)
-		return
-	}
 
 	if err := api.Load(flags.Path); err != nil {
 		log.Fatalf("[Stream][main][api.Load] %v", err)
