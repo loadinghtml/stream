@@ -16,7 +16,7 @@ var (
 		Hash bool
 	}
 
-	CommitHash = ""
+	commitHash string
 )
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 	flag.Parse()
 
 	if flags.Hash {
-		fmt.Println(CommitHash)
+		fmt.Println(commitHash)
 		return
 	}
 
