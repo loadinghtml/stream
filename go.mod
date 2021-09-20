@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.7.4
+	github.com/go-resty/resty/v2 v2.6.0
 	github.com/miekg/dns v1.1.43
 	github.com/yl2chen/cidranger v1.0.2
 )
@@ -21,7 +22,7 @@ require (
 	github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742 // indirect
 	github.com/ugorji/go/codec v1.1.7 // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
-	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
-	golang.org/x/sys v0.0.0-20210303074136-134d130e1a04 // indirect
+	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
+	golang.org/x/sys v0.0.0-20210330210617-4fbd30eecc44 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )

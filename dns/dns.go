@@ -5,51 +5,42 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strings"
 	"time"
 
 	"github.com/aiocloud/stream/api"
-
-	mdns "github.com/miekg/dns"
+	"github.com/miekg/dns"
 )
 
 var (
-	StrictDNS bool = false
+	mux       *dns.ServeMux
+	tcpSocket *dns.Server
+	udpSocket *dns.Server
 
-	mux       *mdns.ServeMux
-	tcpSocket *mdns.Server
-	udpSocket *mdns.Server
-	dialer    = net.Dialer{
+	dialer = net.Dialer{
 		Timeout:   time.Second * 10,
 		KeepAlive: time.Second * 10,
 
 		Resolver: &net.Resolver{
 			PreferGo: true,
 			Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
-				return net.Dial("udp", api.Get().DNS.Upstream)
+				return net.Dial("udp", api.StreamData.DNS.Upstream)
 			},
 		},
 	}
 )
 
-func Dial(network, address string) (net.Conn, error) {
-	return dialer.Dial(network, address)
-}
-
-func Listen(addr string) {
-	if addr == "" {
+func Run() {
+	if api.StreamData.DNS.Listen == "" {
 		return
 	}
 
-	list := api.Get().DomainList
-	mux = mdns.NewServeMux()
+	mux = dns.NewServeMux()
 	mux.HandleFunc("in-addr.arpa.", handleServerName)
-	for i := 0; i < len(list); i++ {
-		mux.HandleFunc(mdns.Fqdn(list[i]), handleDomain)
-	}
-	mux.HandleFunc(".", handleOther)
+	mux.HandleFunc(".", handleDomainName)
 
-	tcpSocket = &mdns.Server{Net: "tcp", Addr: addr, Handler: mux}
-	udpSocket = &mdns.Server{Net: "udp", Addr: addr, Handler: mux}
+	tcpSocket = &dns.Server{Net: "tcp", Addr: api.StreamData.DNS.Listen, Handler: mux}
+	udpSocket = &dns.Server{Net: "udp", Addr: api.StreamData.DNS.Listen, Handler: mux}
 
 	go func() { log.Fatalf("[Stream][DNS][TCP] %v", tcpSocket.ListenAndServe()) }()
 	go func() { log.Fatalf("[Stream][DNS][UDP] %v", udpSocket.ListenAndServe()) }()
@@ -57,21 +48,28 @@ func Listen(addr string) {
 	log.Println("[Stream][DNS] Started")
 }
 
-func handleServerName(w mdns.ResponseWriter, r *mdns.Msg) {
-	if StrictDNS {
-		if checked, err := api.CheckIP(w.RemoteAddr()); err != nil {
+func Dial(network, address string) (net.Conn, error) {
+	return dialer.Dial(network, address)
+}
+
+func handleServerName(w dns.ResponseWriter, r *dns.Msg) {
+	if api.StreamData.DNS.Strict {
+		checked, err := api.CheckIP(w.RemoteAddr())
+		if err != nil {
 			log.Printf("[Stream][DNS][api.CheckIP] %v", err)
 			return
-		} else if !checked {
+		}
+
+		if !checked {
 			return
 		}
 	}
 
-	m := new(mdns.Msg)
+	m := new(dns.Msg)
 	m.SetReply(r)
 
 	for i := 0; i < len(r.Question); i++ {
-		rr, err := mdns.NewRR(fmt.Sprintf("%s PTR aioCloud", r.Question[i].Name))
+		rr, err := dns.NewRR(fmt.Sprintf("%s PTR aioCloud", r.Question[i].Name))
 		if err != nil {
 			log.Println(err)
 			return
@@ -83,46 +81,72 @@ func handleServerName(w mdns.ResponseWriter, r *mdns.Msg) {
 	_ = w.WriteMsg(m)
 }
 
-func handleDomain(w mdns.ResponseWriter, r *mdns.Msg) {
-	if StrictDNS {
-		if checked, err := api.CheckIP(w.RemoteAddr()); err != nil {
-			log.Printf("[Stream][DNS][api.CheckIP] %v", err)
+func handleDomainName(w dns.ResponseWriter, r *dns.Msg) {
+	if api.StreamData.DNS.Strict {
+		checked, err := api.CheckIP(w.RemoteAddr())
+		if err != nil {
+			log.Printf("[Stream][DNS][handleDomainName] api.CheckIP: %v", err)
 			return
-		} else if !checked {
+		}
+
+		if !checked {
 			return
 		}
 	}
 
-	m := new(mdns.Msg)
+	m := new(dns.Msg)
 	m.SetReply(r)
+	m.Question = make([]dns.Question, 0)
 
 	for i := 0; i < len(r.Question); i++ {
-		rr, err := mdns.NewRR(fmt.Sprintf("%s A %s", r.Question[i].Name, api.Get().DNS.Address))
-		if err != nil {
-			log.Println(err)
-			return
-		}
+		if r.Question[i].Qtype == dns.TypeA || r.Question[i].Qtype == dns.TypeAAAA {
+			if checked, _ := api.CheckDomain(strings.TrimRight(r.Question[i].Name, "."), "0"); checked {
+				if r.Question[i].Qtype == dns.TypeA {
+					if api.CurrentIPv4 == "" {
+						continue
+					}
 
-		m.Answer = append(m.Answer, rr)
+					rr, err := dns.NewRR(fmt.Sprintf("%s A %s", r.Question[i].Name, api.CurrentIPv4))
+					if err != nil {
+						log.Printf("[Stream][DNS][handleDomainName] dns.NewRR: %v", err)
+						continue
+					}
+
+					m.Question = append(m.Question, r.Question[i])
+					m.Answer = append(m.Answer, rr)
+					continue
+				}
+
+				if r.Question[i].Qtype == dns.TypeAAAA {
+					if api.CurrentIPv6 == "" {
+						continue
+					}
+
+					rr, err := dns.NewRR(fmt.Sprintf("%s AAAA %s", r.Question[i].Name, api.CurrentIPv6))
+					if err != nil {
+						log.Printf("[Stream][DNS][handleDomainName] dns.NewRR: %v", err)
+						continue
+					}
+
+					m.Question = append(m.Question, r.Question[i])
+					m.Answer = append(m.Answer, rr)
+					continue
+				}
+			}
+		}
 	}
 
-	_ = w.WriteMsg(m)
-}
+	if len(m.Answer) > 0 {
+		m.Id = r.Id
 
-func handleOther(w mdns.ResponseWriter, r *mdns.Msg) {
-	if StrictDNS {
-		if checked, err := api.CheckIP(w.RemoteAddr()); err != nil {
-			log.Printf("[Stream][DNS][api.CheckIP] %v", err)
-			return
-		} else if !checked {
-			return
-		}
+		w.WriteMsg(m)
+		return
 	}
 
-	m, err := mdns.Exchange(r, api.Get().DNS.Upstream)
+	m, err := dns.Exchange(r, api.StreamData.DNS.Upstream)
 	if err != nil {
 		return
 	}
 
-	_ = w.WriteMsg(m)
+	w.WriteMsg(m)
 }

@@ -2,19 +2,20 @@ package mitm
 
 import (
 	"bytes"
+	"io"
 	"log"
 	"net"
 	"strings"
+	"time"
 
 	"github.com/aiocloud/stream/api"
 	"github.com/aiocloud/stream/dns"
-	"github.com/aiocloud/stream/tools"
 )
 
 func handleHTTP(client net.Conn) {
 	defer client.Close()
 
-	data := make([]byte, 1400)
+	data := make([]byte, 1446)
 	size, err := client.Read(data)
 	if err != nil {
 		return
@@ -46,17 +47,33 @@ func handleHTTP(client net.Conn) {
 	if _, ok := list["HOST"]; !ok {
 		return
 	}
-
-	if !api.CheckDoamin(list["HOST"]) {
-		return
-	}
+	host := list["HOST"]
 
 	_, s, _ := net.SplitHostPort(client.LocalAddr().String())
-	log.Printf("[Stream][HTTP][%s] %s <-> %s", s, client.RemoteAddr(), list["HOST"])
+	checked, outbound := api.CheckDomain(host, s)
+	if api.StreamData.Strict {
+		if !checked {
+			return
+		}
+	} else {
+		outbound = "DIRECT"
+	}
 
-	remote, err := dns.Dial("tcp", net.JoinHostPort(list["HOST"], s))
-	if err != nil {
-		return
+	var remote net.Conn
+	if outbound == "DIRECT" {
+		remote, err = dns.Dial("tcp", net.JoinHostPort(host, s))
+		if err != nil {
+			return
+		}
+
+		log.Printf("[Stream][HTTP][%s] %s <-> %s (%s)", s, client.RemoteAddr(), remote.RemoteAddr(), host)
+	} else {
+		remote, err = dns.Dial("tcp", outbound)
+		if err != nil {
+			return
+		}
+
+		log.Printf("[Stream][HTTP][%s] %s <-> %s (%s)", s, client.RemoteAddr(), remote.RemoteAddr(), host)
 	}
 	defer remote.Close()
 
@@ -65,5 +82,13 @@ func handleHTTP(client net.Conn) {
 	}
 	data = nil
 
-	tools.CopyBuffer(client, remote)
+	go func() {
+		io.CopyBuffer(client, remote, make([]byte, 1446))
+		client.SetDeadline(time.Now())
+		remote.SetDeadline(time.Now())
+	}()
+
+	io.CopyBuffer(remote, client, make([]byte, 1446))
+	client.SetDeadline(time.Now())
+	remote.SetDeadline(time.Now())
 }

@@ -1,18 +1,19 @@
 package mitm
 
 import (
+	"io"
 	"log"
 	"net"
+	"time"
 
 	"github.com/aiocloud/stream/api"
 	"github.com/aiocloud/stream/dns"
-	"github.com/aiocloud/stream/tools"
 )
 
 func handleTLS(client net.Conn) {
 	defer client.Close()
 
-	data := make([]byte, 1400)
+	data := make([]byte, 1446)
 	size, err := client.Read(data)
 	if err != nil || size <= 44 {
 		return
@@ -65,8 +66,8 @@ func handleTLS(client net.Conn) {
 		return
 	}
 
-	domain := ""
-	for size > offset+2 && domain == "" {
+	host := ""
+	for size > offset+2 && host == "" {
 		// Extension Type
 		name := (int(data[offset]) << 8) + int(data[offset+1])
 		offset += 2
@@ -103,7 +104,7 @@ func handleTLS(client net.Conn) {
 			}
 
 			// Server Name
-			domain = string(data[offset : offset+length])
+			host = string(data[offset : offset+length])
 
 			// Get Out
 			break
@@ -113,16 +114,31 @@ func handleTLS(client net.Conn) {
 		offset += length
 	}
 
-	if !api.CheckDoamin(domain) {
-		return
+	_, s, _ := net.SplitHostPort(client.LocalAddr().String())
+	checked, outbound := api.CheckDomain(host, s)
+	if api.StreamData.Strict {
+		if !checked {
+			return
+		}
+	} else {
+		outbound = "DIRECT"
 	}
 
-	_, s, _ := net.SplitHostPort(client.LocalAddr().String())
-	log.Printf("[Stream][TLS][%s] %s <-> %s", s, client.RemoteAddr(), domain)
+	var remote net.Conn
+	if outbound == "DIRECT" {
+		remote, err = dns.Dial("tcp", net.JoinHostPort(host, s))
+		if err != nil {
+			return
+		}
 
-	remote, err := dns.Dial("tcp", net.JoinHostPort(domain, s))
-	if err != nil {
-		return
+		log.Printf("[Stream][TLS][%s] %s <-> %s (%s)", s, client.RemoteAddr(), remote.RemoteAddr(), host)
+	} else {
+		remote, err = dns.Dial("tcp", outbound)
+		if err != nil {
+			return
+		}
+
+		log.Printf("[Stream][TLS][%s] %s <-> %s (%s)", s, client.RemoteAddr(), remote.RemoteAddr(), host)
 	}
 	defer remote.Close()
 
@@ -131,5 +147,15 @@ func handleTLS(client net.Conn) {
 	}
 	data = nil
 
-	tools.CopyBuffer(client, remote)
+	log.Printf("[Stream][TLS][%s] %s <-> %s", s, client.RemoteAddr(), host)
+
+	go func() {
+		io.CopyBuffer(client, remote, make([]byte, 1446))
+		client.SetDeadline(time.Now())
+		remote.SetDeadline(time.Now())
+	}()
+
+	io.CopyBuffer(remote, client, make([]byte, 1446))
+	client.SetDeadline(time.Now())
+	remote.SetDeadline(time.Now())
 }

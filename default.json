@@ -1,0 +1,30 @@
+{
+    "api": {
+        "listen": ":8888",
+        "secret": [
+            "__API_SECRET__"
+        ]
+    },
+    "dns": {
+        "strict": true,
+        "listen": ":53",
+        "upstream": "192.168.31.254:1234"
+    },
+    "tcp": {
+        "tls": [
+            ":443"
+        ],
+        "http": [
+            ":80",
+            ":8080"
+        ]
+    },
+    "rules": [
+        {
+            "url": "https://cdn.jsdelivr.net/gh/DivineEngine/Profiles@master/Surge/Ruleset/StreamingMedia/Video/Netflix.list",
+            "mapping": []
+        }
+    ],
+    "whitelist": [],
+    "strict": true
+}
