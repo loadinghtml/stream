@@ -65,15 +65,11 @@ func handleHTTP(client net.Conn) {
 		if err != nil {
 			return
 		}
-
-		log.Printf("[Stream][HTTP][%s] %s <-> %s (%s)", s, client.RemoteAddr(), remote.RemoteAddr(), host)
 	} else {
 		remote, err = dns.Dial("tcp", outbound)
 		if err != nil {
 			return
 		}
-
-		log.Printf("[Stream][HTTP][%s] %s <-> %s (%s)", s, client.RemoteAddr(), remote.RemoteAddr(), host)
 	}
 	defer remote.Close()
 
@@ -81,6 +77,8 @@ func handleHTTP(client net.Conn) {
 		return
 	}
 	data = nil
+
+	log.Printf("[Stream][HTTP][%s] %s <-> %s (%s)", s, client.RemoteAddr(), remote.RemoteAddr(), host)
 
 	go func() {
 		io.CopyBuffer(client, remote, make([]byte, 1446))
