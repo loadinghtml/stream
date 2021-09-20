@@ -67,7 +67,7 @@ OUT_ALERT "[提示] 设置权限中"
 chmod +x stream
 
 OUT_ALERT "[提示] 复制配置中"
-cp -f example.json /etc/stream.json
+cp -f default.json /etc/stream.json
 sed -i "s/__API_SECRET__/$SECRET/" /etc/stream.json
 
 OUT_ALERT "[提示] 复制程序中"
