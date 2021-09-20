@@ -8,7 +8,7 @@
     "dns": {
         "strict": true,
         "listen": ":53",
-        "upstream": "192.168.31.254:1234"
+        "upstream": "1.1.1.1:53"
     },
     "tcp": {
         "tls": [
