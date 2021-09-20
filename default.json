@@ -21,7 +21,7 @@
     },
     "rules": [
         {
-            "url": "https://cdn.jsdelivr.net/gh/DivineEngine/Profiles@master/Surge/Ruleset/StreamingMedia/Video/Netflix.list",
+            "url": "https://raw.githubusercontent.com/aiocloud/stream/main/ruleset/allinone.list",
             "mapping": []
         }
     ],
