@@ -126,8 +126,6 @@ func handleDomainName(w dns.ResponseWriter, r *dns.Msg) {
 	}
 
 	if len(m.Answer) > 0 {
-		m.Id = r.Id
-
 		w.WriteMsg(m)
 		return
 	}
