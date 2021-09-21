@@ -140,7 +140,7 @@ func GetIP(url string) (net.IP, error) {
 	scanner := bufio.NewReader(bytes.NewReader(response.Body()))
 	for {
 		i, _, _ := scanner.ReadLine()
-		if len(i) == 0 {
+		if i == nil {
 			break
 		}
 
