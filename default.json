@@ -19,6 +19,9 @@
             ":8080"
         ]
     },
+    "out": {
+        "network": "tcp"
+    },
     "rules": [
         {
             "url": "https://raw.githubusercontent.com/aiocloud/stream/main/ruleset/allinone.list",

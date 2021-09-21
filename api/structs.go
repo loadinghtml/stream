@@ -16,6 +16,7 @@ type Stream struct {
 	API    StreamAPI    `json:"api"`
 	DNS    StreamDNS    `json:"dns"`
 	TCP    StreamTCP    `json:"tcp"`
+	Out    StreamOut    `json:"out"`
 	Rule   []StreamRule `json:"rules"`
 	List   []string     `json:"whitelist"`
 	Strict bool         `json:"strict"`
@@ -35,6 +36,10 @@ type StreamDNS struct {
 type StreamTCP struct {
 	TLS  []string `json:"tls"`
 	HTTP []string `json:"http"`
+}
+
+type StreamOut struct {
+	Network string `json:"network"`
 }
 
 type StreamRule struct {

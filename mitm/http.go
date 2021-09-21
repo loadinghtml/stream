@@ -61,12 +61,12 @@ func handleHTTP(client net.Conn) {
 
 	var remote net.Conn
 	if outbound == "DIRECT" {
-		remote, err = dns.Dial("tcp", net.JoinHostPort(host, s))
+		remote, err = dns.Dial(api.StreamData.Out.Network, net.JoinHostPort(host, s))
 		if err != nil {
 			return
 		}
 	} else {
-		remote, err = dns.Dial("tcp", outbound)
+		remote, err = dns.Dial(api.StreamData.Out.Network, outbound)
 		if err != nil {
 			return
 		}
