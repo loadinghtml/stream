@@ -24,10 +24,12 @@
     },
     "rules": [
         {
-            "url": "https://raw.githubusercontent.com/aiocloud/stream/main/ruleset/allinone.list",
+            "url": "https://cdn.jsdelivr.net/gh/aiocloud/stream@main/ruleset/allinone.list",
             "mapping": []
         }
     ],
-    "whitelist": [],
+    "whitelist": [
+        "127.0.0.1/32"
+    ],
     "strict": true
 }

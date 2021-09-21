@@ -101,37 +101,26 @@ func handleDomainName(w dns.ResponseWriter, r *dns.Msg) {
 	for i := 0; i < len(r.Question); i++ {
 		if r.Question[i].Qtype == dns.TypeA || r.Question[i].Qtype == dns.TypeAAAA {
 			if checked, _ := api.CheckDomain(strings.TrimRight(r.Question[i].Name, "."), "0"); checked {
+				var rr dns.RR
+
 				if r.Question[i].Qtype == dns.TypeA {
-					if api.CurrentIPv4 == "" {
-						continue
+					if api.CurrentIPv4 != "" {
+						rr, _ = dns.NewRR(fmt.Sprintf("%s A %s", r.Question[i].Name, api.CurrentIPv4))
+					} else {
+						rr, _ = dns.NewRR(fmt.Sprintf("%s A 0.0.0.0", r.Question[i].Name))
 					}
-
-					rr, err := dns.NewRR(fmt.Sprintf("%s A %s", r.Question[i].Name, api.CurrentIPv4))
-					if err != nil {
-						log.Printf("[Stream][DNS][handleDomainName] dns.NewRR: %v", err)
-						continue
-					}
-
-					m.Question = append(m.Question, r.Question[i])
-					m.Answer = append(m.Answer, rr)
-					continue
 				}
 
 				if r.Question[i].Qtype == dns.TypeAAAA {
-					if api.CurrentIPv6 == "" {
-						continue
+					if api.CurrentIPv6 != "" {
+						rr, _ = dns.NewRR(fmt.Sprintf("%s AAAA %s", r.Question[i].Name, api.CurrentIPv6))
+					} else {
+						rr, _ = dns.NewRR(fmt.Sprintf("%s AAAA ::", r.Question[i].Name))
 					}
-
-					rr, err := dns.NewRR(fmt.Sprintf("%s AAAA %s", r.Question[i].Name, api.CurrentIPv6))
-					if err != nil {
-						log.Printf("[Stream][DNS][handleDomainName] dns.NewRR: %v", err)
-						continue
-					}
-
-					m.Question = append(m.Question, r.Question[i])
-					m.Answer = append(m.Answer, rr)
-					continue
 				}
+
+				m.Question = append(m.Question, r.Question[i])
+				m.Answer = append(m.Answer, rr)
 			}
 		}
 	}
