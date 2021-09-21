@@ -93,7 +93,7 @@ DOMAIN-SUFFIX,banner-cfnetwork.cdn.hinet.net
 DOMAIN-SUFFIX,hamivideo.hinet.net
 DOMAIN-SUFFIX,previewvod-hamivideo.cdn.hinet.net
 DOMAIN-SUFFIX,kfs.io
-DOMAIN-SUFFIX,kktv-theater.kk.1.1.1.1
+DOMAIN-SUFFIX,kktv-theater.kk.stream
 DOMAIN-SUFFIX,kkbox.com
 DOMAIN-SUFFIX,kkbox.com.tw
 DOMAIN-SUFFIX,kktv.com.tw
@@ -125,7 +125,7 @@ DOMAIN-SUFFIX,dmm-extension.com
 DOMAIN-SUFFIX,dmm.co.jp
 DOMAIN-SUFFIX,dmm.com
 DOMAIN-SUFFIX,fujitv.co.jp
-DOMAIN-SUFFIX,1.1.1.1.ne.jp
+DOMAIN-SUFFIX,stream.ne.jp
 DOMAIN-SUFFIX,happyon.jp
 DOMAIN-SUFFIX,hulu.jp
 DOMAIN-SUFFIX,dmc.nico
@@ -135,7 +135,7 @@ DOMAIN-SUFFIX,socdm.com
 DOMAIN-SUFFIX,paravi.jp
 DOMAIN-SUFFIX,radiko.jp
 DOMAIN-SUFFIX,radionikkei.jp
-DOMAIN-SUFFIX,smart1.1.1.1.ne.jp
+DOMAIN-SUFFIX,smartstream.ne.jp
 DOMAIN-SUFFIX,tver.jp
 DOMAIN-SUFFIX,wowow.co.jp
 DOMAIN-SUFFIX,naver.com
@@ -216,7 +216,7 @@ DOMAIN-SUFFIX,hbomax.com
 DOMAIN-SUFFIX,hbonow.com
 DOMAIN-SUFFIX,hulu.com
 DOMAIN-SUFFIX,huluim.com
-DOMAIN-SUFFIX,hulu1.1.1.1.com
+DOMAIN-SUFFIX,hulustream.com
 DOMAIN-SUFFIX,paramountplus.com
 DOMAIN-SUFFIX,pbs.org
 DOMAIN-SUFFIX,peacocktv.com
