@@ -25,6 +25,8 @@ type Stream struct {
 type StreamAPI struct {
 	Listen string   `json:"listen"`
 	Secret []string `json:"secret"`
+	IPv4   string   `json:"ipv4"`
+	IPv6   string   `json:"ipv6"`
 }
 
 type StreamDNS struct {

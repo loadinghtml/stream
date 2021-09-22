@@ -165,7 +165,7 @@ func UpdateRule() error {
 }
 
 func UpdateIPv4() error {
-	addr, err := GetIP("https://1.1.1.1/cdn-cgi/trace")
+	addr, err := GetIP(StreamData.API.IPv4)
 	if err != nil {
 		return fmt.Errorf("api.GetIP: %v", err)
 	}
@@ -175,7 +175,7 @@ func UpdateIPv4() error {
 }
 
 func UpdateIPv6() error {
-	addr, err := GetIP("https://[2606:4700:4700::1111]/cdn-cgi/trace")
+	addr, err := GetIP(StreamData.API.IPv6)
 	if err != nil {
 		return fmt.Errorf("api.GetIP: %v", err)
 	}
