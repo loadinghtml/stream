@@ -177,6 +177,13 @@ ols-ww100-cp.akamaized.net
 tra-www000-cp.akamaized.net
 ```
 
+Eleven Sports
+```
+dv8n4jja5ycl3.cloudfront.net
+tw-elevensports.com
+v-saas.com
+```
+
 HamiVideo
 ```
 apl-hamivideo.cdn.hinet.net

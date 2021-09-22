@@ -88,6 +88,9 @@ DOMAIN-SUFFIX,catchplay.com
 DOMAIN-SUFFIX,d2ivmxp5z2ww0n.cloudfront.net
 DOMAIN-SUFFIX,ols-ww100-cp.akamaized.net
 DOMAIN-SUFFIX,tra-www000-cp.akamaized.net
+DOMAIN-SUFFIX,dv8n4jja5ycl3.cloudfront.net
+DOMAIN-SUFFIX,tw-elevensports.com
+DOMAIN-SUFFIX,v-saas.com
 DOMAIN-SUFFIX,apl-hamivideo.cdn.hinet.net
 DOMAIN-SUFFIX,banner-cfnetwork.cdn.hinet.net
 DOMAIN-SUFFIX,hamivideo.hinet.net
@@ -176,6 +179,7 @@ DOMAIN-SUFFIX,cbs.com
 DOMAIN-SUFFIX,cbsaavideo.com
 DOMAIN-SUFFIX,cbsivideo.com
 DOMAIN-SUFFIX,cbsi.live.ott.irdeto.com
+DOMAIN-SUFFIX,play.maxgo.com
 DOMAIN-SUFFIX,cwtv.com
 DOMAIN-SUFFIX,cwtv-amd-akamai.akamaized.net
 DOMAIN-SUFFIX,edge.cwtv-vod-ext.top.comcast.net
@@ -265,5 +269,4 @@ DOMAIN-SUFFIX,cbcnewshd-f.akamaihd.net
 DOMAIN-SUFFIX,cbcrcott-gem-key.akamaized.net
 DOMAIN-SUFFIX,cbcrcott-gem.akamaized.net
 DOMAIN-SUFFIX,crave.ca
-DOMAIN-SUFFIX,go-mpulse.net
 DOMAIN-SUFFIX,9c9media.com
