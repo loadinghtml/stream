@@ -39,11 +39,22 @@ players.brightcove.net
 
 ### 全球流媒体
 
+DAZN
+```
+d151l6v8er5bdm.cloudfront.net
+dazn-api.com
+dazn.com
+dazndn.com
+indazn.com
+intercom.io
+```
+
 Disney Plus
 ```
 bamgrid.com
 disney-plus.net
 disneyplus.com
+disneystreaming.com
 dssott.com
 ```
 
@@ -74,6 +85,26 @@ netflixdnstest8.com
 netflixdnstest9.com
 ```
 
+Tiktok
+```
+byteoversea.com
+ibytedtos.com
+ipstatp.com
+muscdn.com
+musical.ly
+tiktok.com
+tik-tokapi.com
+tiktokcdn.com
+tiktokv.com
+```
+
+TVBAnywhere+
+```
+tvb.com
+tvbanywhere.com.sg
+dcqvtb6fjzvu6.cloudfront.net
+```
+
 Youtube Premium
 ```
 gstatic.com
@@ -81,7 +112,6 @@ googlevideo.com
 youtube.com
 ytimg.com
 youtubei.googleapis.com
-googleapis.com
 yt3.ggpht.com
 ```
 
@@ -239,16 +269,6 @@ ds-linear-abematv.akamaized.net
 ds-vod-abematv.akamaized.net
 ameba.jp
 hayabusa.io
-```
-
-DAZN
-```
-d151l6v8er5bdm.cloudfront.net
-dazn-api.com
-dazn.com
-dazndn.com
-indazn.com
-intercom.io
 ```
 
 DMM
@@ -620,4 +640,45 @@ Crave TV
 crave.ca
 go-mpulse.net
 9c9media.com
+```
+
+### 澳大利亚区
+
+9Now
+```
+9cdn.net
+9now-livestreams.akamaized.net
+9now.com.au
+edge.api.brightcove.com
+nine.com.au
+p-9now.akamaized.net
+static9.net.au
+```
+
+ABC-iView
+```
+abc-iview-mediapackagestreams-1.akamaized.net
+abc-iview-mediapackagestreams-2.akamaized.net
+abc-iview-mediapackagestreams-3.akamaized.net
+abc-iview-mediapackagestreams-4.akamaized.net
+abc.net.au
+iview-vod.akamaized.net
+abc-cdn.net.au
+```
+
+DocPlay
+```
+docplay.com
+0c86e2d1-madman-com-au.akamaized.net
+ff1be285-madman-com-au.akamaized.net
+5a929471-madman-com-au.akamaized.net
+879ed873-madman-com-au.akamaized.net
+```
+
+Stan
+```
+stan.com.au
+stan.video
+streamcoimg-a.akamaihd.net
+-stan.akamazed.net
 ```
