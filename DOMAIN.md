@@ -244,6 +244,11 @@ d3c7rimkq79yfu.cloudfront.net
 linetv.tw
 ```
 
+MyVideo
+```
+myvideo.net.tw
+```
+
 4gTV
 ```
 4gtv.tv

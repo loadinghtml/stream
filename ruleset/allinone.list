@@ -122,6 +122,7 @@ DOMAIN-SUFFIX,litvfreemobile-hichannel.cdn.hinet.net
 DOMAIN-SUFFIX,litv.tv
 DOMAIN-SUFFIX,d3c7rimkq79yfu.cloudfront.net
 DOMAIN-SUFFIX,linetv.tw
+DOMAIN-SUFFIX,myvideo.net.tw
 DOMAIN-SUFFIX,4gtv.tv
 DOMAIN-SUFFIX,4gtvfreepc-cds.cdn.hinet.net
 DOMAIN-SUFFIX,4gtvfreepcvod-cds.cdn.hinet.net
@@ -170,9 +171,15 @@ DOMAIN-SUFFIX,britbox.co.uk
 DOMAIN-SUFFIX,itvpnpmobile-a.akamaihd.net
 DOMAIN-SUFFIX,itv.com
 DOMAIN-SUFFIX,itvstatic.com
-DOMAIN-SUFFIX,d349g9zuie06uo.cloudfront.net
 DOMAIN-SUFFIX,channel5.com
-DOMAIN-SUFFIX,my5.tv
+DOMAIN,akadash0.akamaized.net
+DOMAIN,player.akamaized.net
+DOMAIN,akadashlive-c5.akamaized.net
+DOMAIN,akadashlive-5usa.akamaized.net
+DOMAIN,akadashlive-5star.akamaized.net
+DOMAIN,akadashlive-paramount.akamaized.net
+DOMAIN,akadashlive-5select.akamaized.net
+DOMAIN,akasubs.akamaized.net
 DOMAIN-SUFFIX,skysports.com
 DOMAIN-SUFFIX,molotov.tv
 DOMAIN-SUFFIX,salto.fr
