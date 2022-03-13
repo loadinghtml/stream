@@ -515,6 +515,12 @@ Fubo TV
 fubo.tv
 ```
 
+Funimation
+```
+funimation.com
+funimationsvc.com
+```
+
 FX Networks
 ```
 fxnetworks.com
