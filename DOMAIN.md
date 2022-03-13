@@ -483,6 +483,7 @@ ESPN
 ```
 espn.com
 espncdn.com
+espn.api.edge.bamgrid.com
 ```
 
 Fox Now & Fox News & Fox Sports
