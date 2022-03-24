@@ -47,8 +47,7 @@ jobs:
           draft: false
           files: |
             release.zip
-          body: |
-            [![](https://img.shields.io/badge/telegram-group-blue)](https://t.me/aioCloud) [![](https://img.shields.io/badge/telegram-channel-green)](https://t.me/aioCloud_channel)
+          body: | 
             ## 更新日志
             * 将会很快更新
 

@@ -58,7 +58,7 @@ SECRET=$(openssl rand -hex 12)
 
 OUT_ALERT "[提示] 下载程序中"
 rm -fr release
-wget -O release.zip https://github.com/aiocloud/stream/releases/latest/download/release.zip || OUT_ERROR "[错误] 下载程序失败！"
+wget -O release.zip https://github.com/betaxab/stream/releases/latest/download/release.zip || OUT_ERROR "[错误] 下载程序失败！"
 
 OUT_ALERT "[提示] 解压程序中"
 unzip release.zip && rm -f release.zip && cd release
