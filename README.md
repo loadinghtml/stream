@@ -17,18 +17,23 @@
 curl -fsSL https://raw.githubusercontent.com/loadinghtml/stream/loadinghtml-stream/scripts/kickstart.sh | bash
 ```
 
+## 更新
+```bash
+curl -fsSL https://raw.githubusercontent.com/loadinghtml/stream/loadinghtml-stream/scripts/upgrade.sh | bash
+```
+
+## 卸载
+```bash
+curl -fsSL https://raw.githubusercontent.com/loadinghtml/stream/loadinghtml-stream/scripts/remove.sh | bash
+```
+
 ## 配置文件
 Stream
 ```
 /etc/stream.json
 ```
-SmartDNS
-```
-/etc/smartdns/smartdns.conf
-```
 
 ## 控制命令
 ```
 systemctl status stream
-systemctl status smartdns
 ```
