@@ -35,23 +35,27 @@ Stream
 
 ## 控制命令
 
-##启动
+启动
 ```
 systemctl start stream
 ``` 
-##停止
+
+停止
 ```
 systemctl stop stream
 ```
-##重启
+
+重启
 ```
 systemctl restart stream
 ``` 
-##状态
+
+状态
 ```
 systemctl status stream
 ``` 
-##具体日志
+
+具体日志
 ```
 journalctl -f -u stream
 ``` 
