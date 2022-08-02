@@ -56,9 +56,15 @@ cd ~
 OUT_ALERT "[提示] 生成密钥中"
 SECRET=$(openssl rand -hex 12)
 
+OUT_ALERT "[提示] 获取地址中"
+CURRENT=$(curl -fsSL -4 https://www.cloudflare.com/cdn-cgi/trace | grep ip | tr -d 'ip=')
+if [[ "$CURRENT" == "" ]]; then
+    OUT_ERROR "[错误] 获取地址失败！"
+fi
+
 OUT_ALERT "[提示] 下载程序中"
 rm -fr release
-wget -O release.zip https://github.com/aiocloud/stream/releases/latest/download/release.zip || OUT_ERROR "[错误] 下载程序失败！"
+wget -O release.zip https://github.com/loadinghtml/stream/loadinghtml-stream/releases/latest/download/release.zip || OUT_ERROR "[错误] 下载程序失败！"
 
 OUT_ALERT "[提示] 解压程序中"
 unzip release.zip && rm -f release.zip && cd release
